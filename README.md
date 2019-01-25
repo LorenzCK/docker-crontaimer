@@ -1,2 +1,3 @@
-# docker-crontaimer
-Simple docker image that executes cron jobs.
+# Docker CronTaimer 🐳⏲
+
+Basic Docker image that executes cron jobs for you.
