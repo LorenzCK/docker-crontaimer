@@ -2,12 +2,11 @@ FROM alpine:3.8
 
 # Install bash, make, docker and docker compose
 RUN apk update && \
-    apk add 'bash' && \
-    apk add 'make' && \
-    apk add 'docker>18' && \
-    apk add 'py-pip' && \
-    pip install 'docker-compose==1.23.1' && \
-    rm -rf /var/cache/apk/*
+    apk add --no-cache 'bash' && \
+    apk add --no-cache 'make' && \
+    apk add --no-cache 'docker>18' && \
+    apk add --no-cache 'py-pip' && \
+    pip --no-cache-dir install 'docker-compose==1.23.1'
 
 COPY cronjobs /etc/crontabs/root
 
