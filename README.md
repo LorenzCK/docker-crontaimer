@@ -7,7 +7,7 @@ Basic Docker image that executes cron jobs for you.
 Lightweight image based on **Alpine:3.8** that runs the cron daemon in foreground.
 Crontab file can be built into your image or mounted as a volume.
 
-Docker, docker-compose, make and bash are included, allowing you to run scripts or interact with your containers in response from your cron jobs.
+Docker, docker-compose, make and bash are included, allowing you to run scripts or interact with your containers in response to your cron jobs.
 
 ## Usage
 
@@ -21,20 +21,27 @@ Hello world!
 crond: USER root pid   6 cmd echo "Hello world!"
 ```
 
-When using the image as a service in docker-compose, mount your own cron jobs specification using a volume.
+Copy your crontab specification onto `/etc/crontabs/root` to set the jobs you need.
+The simplest `Dockerfile` can be as follows:
+
+```
+FROM lorenzck/crontaimer:latest
+COPY mycronjobs /etc/crontabs/root
+```
+
+A suggested docker-compose configuration might look like this:
 
 ```yml
 version: '3'
 
 services:
   timer:
-    image: lorenzck/crontaimer:latest
+    build: path-to-dockerfile
     volumes:
-    - ./mycronjobs:/etc/crontabs/root:ro
     - /var/run/docker.sock:/var/run/docker.sock:rw
     restart: unless-stopped
 ```
 
-Mounting the Docker socket as a read/write volume also allows you to operate on Docker containers from your cron jobs.
+Mounting the Docker socket as a read/write volume allows you to operate on Docker containers from your cron jobs.
 
-You may also choose to mount your `docker-compose.yml` or `Makefile` in order to use it from the `crontaimer` container and perform more complex tasks.
+You may also choose to mount the directory containing your `docker-compose.yml` or `Makefile`, in order to use it from the `crontaimer` container to perform more complex tasks.

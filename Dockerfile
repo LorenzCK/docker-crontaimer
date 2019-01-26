@@ -10,7 +10,5 @@ RUN apk update && \
 
 COPY cronjobs /etc/crontabs/root
 
-VOLUME [ "/etc/crontabs", "/var/run/docker.sock" ]
-
 # Execute Cron daemon in foreground, log level 8
 CMD ["crond", "-f", "-d", "8"]
