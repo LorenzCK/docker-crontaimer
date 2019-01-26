@@ -1,4 +1,8 @@
 FROM alpine:3.8
+LABEL maintainer="Lorenz Cuno Klopfenstein <lck@klopfenstein.net>"
+
+# Ensure cron runs in UTC timezone
+ENV TZ=UTC
 
 # Install bash, make, docker and docker compose
 RUN apk update && \

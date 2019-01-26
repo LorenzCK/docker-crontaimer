@@ -45,3 +45,10 @@ services:
 Mounting the Docker socket as a read/write volume allows you to operate on Docker containers from your cron jobs.
 
 You may also choose to mount the directory containing your `docker-compose.yml` or `Makefile`, in order to use it from the `crontaimer` container to perform more complex tasks.
+
+## Notes
+
+* The image is configured to run jobs in UTC time.
+  Add `TZ=UTC` at the top of your crontab file (see [the default cronjobs file](https://github.com/LorenzCK/docker-crontaimer/blob/master/cronjobs)) in order to ensure that your jobs also work in the same timezone.
+* Crontab files must end with a newline character.
+* Add `2>&1` to your cron job command to ensure that `stderr` is also redirected to the logs of your container.
